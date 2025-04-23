@@ -1,30 +1,34 @@
-import React from 'react';
-import UserCard from './components/UserCard';
+import React, { useEffect, useState } from 'react';
+import UserForm from './components/UserForm';
+import UsersList from './components/UsersList';
+import { users as defaultUsers } from './users';
 
 const App = () => {
 
-  const users = [
-    {
-      name: "Pooja Dutt",
-      email: "pooja@gmail.com",
-      bio: " I am a software engineer with 5 years of experience in web development. I love coding and learning new technologies.",
-      avatar: "https://i.pinimg.com/474x/41/b5/c5/41b5c5f32aeab94530e52fcca99c289f.jpg",
-      skills: ["Javascript", "HTML", "CSS", "React JS", "Next JS"],
-    },
-    {
-      name: "Telusko",
-      email: "telusko@gmail.com",
-      bio: "I am a Java Developer specializing in Cloud technologies.",
-      avatar: "https://i.pinimg.com/474x/04/b0/59/04b0591d7402691ad4f766df004119d3.jpg",
-      skills: ["Java SE", "Spring Boot", "Maven"],
-    },
-  ];
+  const [users, setUsers] = useState([]);
+
+  // This effect runs only once when the component mounts
+  // and sets the initial users in local storage
+  useEffect(() => {
+    localStorage.setItem('users', JSON.stringify(defaultUsers));
+
+    const storedUsers = localStorage.getItem('users');
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers));
+    } else {
+      setUsers(defaultUsers);
+    }
+  }, []);
+
 
   return (
-    <div className='text-5xl'>
-      <h1>User Profile Cards</h1>
+    <div className='min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8'>
+      <div className="container mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-6">Users Management App</h1>
 
-      <UserCard users={users} />
+        <UserForm setUsers={setUsers} />
+        <UsersList users={users} />
+      </div>
     </div>
   );
 };

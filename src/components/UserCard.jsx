@@ -1,26 +1,17 @@
-import UserAvatar from "./UserAvatar";
-import UserInfo from "./UserInfo";
-import UserSkills from "./UserSkills";
 
-const UserCard = ({ users }) => {
-
+const UserCard = ({ user }) => {
     return (
-        <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {
-                users.map((user, index) => (
-                    <div key={index} className="max-w-[300px] bg-white rounded-lg">
-                        <UserAvatar src={user.avatar} />
-                        <UserInfo name={user.name} email={user.email} bio={user.bio} />
-                        {
-                            user.skills.map((skill, index) => (
-                                <UserSkills key={index} skill={skill} />
-                            ))
-                        }
-                    </div>
-                ))
-            }
+        <div className="w-full md:max-w-sm rounded-lg shadow-lg py-2 px-4 flex flex-col gap-6 bg-white">
+            <div className="flex gap-3 items-center">
+                <img src={user.avatar} alt="User Avatar" className="w-36 h-36 object-cover rounded-full" />
+                <span>{user.name}</span>
+            </div>
+            <div className="flex flex-col gap-3">
+                <p className="text-blue-500 text-sm">Email: <span className="text-gray-500">{user.email}</span></p>
+                <p className="text-blue-500 text-sm line-clamp-2">Bio: <span className="text-gray-500">{user.bio}</span></p>
+            </div>
         </div>
-    )
-}
+    );
+};
 
-export default UserCard
+export default UserCard;
